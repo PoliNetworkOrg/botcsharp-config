@@ -24,6 +24,10 @@ type BotConfig struct {
 	ApiId                  *int64  `json:"apiId"`
 }
 
+type BotConfigJson struct {
+	Bots []BotConfig `json:"bots"`
+}
+
 type DbConfig struct {
 	User     string `json:"User"`
 	Password string `json:"Password"`
@@ -46,7 +50,7 @@ const (
 )
 
 func createBotConfig(outDir string) {
-	writer, err := writer.NewWriter[[]BotConfig](outDir)
+	writer, err := writer.NewWriter[BotConfigJson](outDir)
 	if err != nil {
 		panic(fmt.Sprintf("OUT_DIR %s does not exist", outDir))
 	}
@@ -68,7 +72,11 @@ func createBotConfig(outDir string) {
 		ApiId:                  ENV.GetInt("BOT_API_ID", nil),
 	}
 
-	writer.JsonWrite(BotConfigFilename, []BotConfig{config}, true)
+	jsonConfig := BotConfigJson {
+		Bots: []BotConfig{config},
+	}
+
+	writer.JsonWrite(BotConfigFilename, jsonConfig, true)
 }
 
 func createDbConfig(outDir string) {
