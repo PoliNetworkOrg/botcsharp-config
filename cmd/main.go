@@ -107,7 +107,7 @@ func createMatConfig(outDir string) {
 		Password: ENV.GetStringPanic("MAT_PASSWORD"),
 	}
 
-	writer.JsonWrite(DbConfigFilename, config, true)
+	writer.JsonWrite(MatConfigFilename, config, true)
 }
 
 func main() {
